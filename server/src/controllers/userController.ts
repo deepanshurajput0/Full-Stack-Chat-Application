@@ -27,6 +27,12 @@ export  async function registerController(req:Request,res:Response){
         })
 
         const token = jwt.sign({id:createdUser.id},process.env.JWT_SECRET as string,{expiresIn:'7d'})
+         res.cookie('token',token,{
+        httpOnly:true,
+        secure:true,
+        sameSite:"strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000
+       })
           return res.status(201).json({
           message:'user created successfully',
           token
@@ -54,6 +60,12 @@ export async function loginController(req:Request,res:Response){
         return res.status(400).json({message:'Incorrect user & password'})
       }
       const token = jwt.sign({id:user.id},process.env.JWT_SECRET as string,{expiresIn:'7d'})
+       res.cookie('token',token,{
+        httpOnly:true,
+        secure:true,
+        sameSite:"strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000
+       })
          return res.status(201).json({
           message:'user loggedIn successfully',
           token
@@ -62,3 +74,4 @@ export async function loginController(req:Request,res:Response){
        return res.status(500).json({message:'Internal Server error',error})
    }
 }
+

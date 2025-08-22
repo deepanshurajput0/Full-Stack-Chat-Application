@@ -42,6 +42,12 @@ function registerController(req, res) {
                 }
             });
             const token = jsonwebtoken_1.default.sign({ id: createdUser.id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+            res.cookie('token', token, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "strict",
+                maxAge: 7 * 24 * 60 * 60 * 1000
+            });
             return res.status(201).json({
                 message: 'user created successfully',
                 token
@@ -71,6 +77,12 @@ function loginController(req, res) {
                 return res.status(400).json({ message: 'Incorrect user & password' });
             }
             const token = jsonwebtoken_1.default.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+            res.cookie('token', token, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "strict",
+                maxAge: 7 * 24 * 60 * 60 * 1000
+            });
             return res.status(201).json({
                 message: 'user loggedIn successfully',
                 token
