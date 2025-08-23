@@ -19,3 +19,7 @@ npx prisma generate
 
 <img width="1118" height="733" alt="Screenshot 2025-08-21 140954" src="https://github.com/user-attachments/assets/fce2bab7-c39f-4c75-8434-ab617b1ae4f3" />
 
+## Flow of Realtime Messaging
+How User A sends message to User B
+
+<img width="1582" height="778" alt="Screenshot 2025-08-23 131259" src="https://github.com/user-attachments/assets/25ad2745-039c-40bc-b59c-a9b17a8555bd" />
