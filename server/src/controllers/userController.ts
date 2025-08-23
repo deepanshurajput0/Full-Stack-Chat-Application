@@ -75,3 +75,11 @@ export async function loginController(req:Request,res:Response){
    }
 }
 
+export async function currentUser(req:Request,res:Response){
+   try {
+       const userId = req.user
+       return res.status(200).json(userId)         
+   } catch (error) {
+      return res.status(500).json({message:'Internal server error'})
+   }
+}

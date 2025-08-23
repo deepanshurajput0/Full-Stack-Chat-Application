@@ -1,11 +1,13 @@
 import express,{Application,Request,Response} from 'express'
 import userRouter from './routes/userRoutes'
+import cookie from 'cookie-parser'
 const app:Application = express()
 
 const PORT = 8000
 
 app.use(express.json())
 
+app.use(cookie())
 app.get("/",(req:Request,res:Response) =>{
      res.json({msg:"Its working fine"})   
 })
