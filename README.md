@@ -13,3 +13,9 @@ npx prisma init
 
 ## 5. Generate client in default location node_modules/@prisma/client
 npx prisma generate
+
+
+## Data modeling of Chat App
+
+<img width="1118" height="733" alt="Screenshot 2025-08-21 140954" src="https://github.com/user-attachments/assets/fce2bab7-c39f-4c75-8434-ab617b1ae4f3" />
+
