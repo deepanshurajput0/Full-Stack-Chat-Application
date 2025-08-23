@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerController = registerController;
 exports.loginController = loginController;
 exports.currentUser = currentUser;
+exports.getAllUsers = getAllUsers;
 const db_1 = __importDefault(require("../config/db"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -102,6 +103,27 @@ function currentUser(req, res) {
         }
         catch (error) {
             return res.status(500).json({ message: 'Internal server error' });
+        }
+    });
+}
+function getAllUsers(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        var _a;
+        try {
+            const users = yield db_1.default.user.findMany({
+                where: {
+                    NOT: {
+                        id: (_a = req.user) === null || _a === void 0 ? void 0 : _a.id
+                    }
+                }
+            });
+            return res.status(200).json(users);
+        }
+        catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                message: 'Internal server error'
+            });
         }
     });
 }

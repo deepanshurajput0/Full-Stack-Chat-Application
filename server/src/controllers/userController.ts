@@ -83,3 +83,22 @@ export async function currentUser(req:Request,res:Response){
       return res.status(500).json({message:'Internal server error'})
    }
 }
+
+export async function getAllUsers(req:Request,res:Response){
+  try {
+    const users = await prisma.user.findMany({
+      where:{
+        NOT:{
+          id:req.user?.id
+        }
+      }
+    })
+    return res.status(200).json(users)
+  } catch (error) {
+    console.log(error)
+     return res.status(500).json({
+      message:'Internal server error'
+     }) 
+  }
+}
+
