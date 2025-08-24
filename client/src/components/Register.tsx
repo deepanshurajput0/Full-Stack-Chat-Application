@@ -20,7 +20,8 @@ const Register = () => {
      }
   };
   
-  async function handleSubmit(){
+  async function handleSubmit(e:React.FormEvent){
+    e.preventDefault()
     setLoading(true)
     const data = new FormData()
     data.append('name',user.name)
@@ -38,6 +39,8 @@ const Register = () => {
         console.log("Success",res.data)
     } catch (error) {
       console.log(error)
+    }finally{
+      setLoading(false)
     }
   }
 
@@ -88,7 +91,7 @@ const Register = () => {
         name="profilePic"
         onChange={handleChange} 
         className="file-input" />
-        <button onClick={handleSubmit}  className="btn btn-neutral mt-4">
+        <button type="submit"  className="btn btn-neutral mt-4">
           {
             loading ? <span className="loading loading-spinner loading-xs"></span> :   "Create Profile"
           }
