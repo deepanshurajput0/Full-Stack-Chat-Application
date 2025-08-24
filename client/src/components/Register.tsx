@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from 'axios'
+import toast from "react-hot-toast";
 const Register = () => {
   const [user, setUser] = useState({
     name: "",
@@ -36,9 +37,13 @@ const Register = () => {
           "Content-Type":"multipart/form-data"
         }
        })
-        console.log("Success",res.data)
-    } catch (error) {
-      console.log(error)
+       toast.success(res.data.message)
+    } catch (error:any) {
+      const errorMsg = error.response.data.message
+      if(errorMsg){
+        toast.error(errorMsg)
+      }
+      
     }finally{
       setLoading(false)
     }
