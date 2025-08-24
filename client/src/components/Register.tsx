@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import axios from 'axios'
 const Register = () => {
   const [user, setUser] = useState({
     name: "",
@@ -9,7 +9,7 @@ const Register = () => {
   });
 
   const [preview, setPreview ] = useState<string | null>(null) 
-
+  const [loading, setLoading] = useState<boolean>(false)
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target
      if(name === 'profilePic' && files){
@@ -20,13 +20,33 @@ const Register = () => {
      }
   };
   
-  function handleSubmit(){
-    console.log(user)
+  async function handleSubmit(){
+    setLoading(true)
+    const data = new FormData()
+    data.append('name',user.name)
+    data.append('email',user.email)
+    data.append('password',user.password) 
+    if(user.profilePic){
+      data.append('profilePic',user.profilePic)
+    }
+    try {
+       const res = await axios.post('http://localhost:8000/api/v1/user/register',data,{
+        headers:{
+          "Content-Type":"multipart/form-data"
+        }
+       })
+        console.log("Success",res.data)
+    } catch (error) {
+      console.log(error)
+    }
   }
+
+
 
   return (
     <div className=" flex justify-evenly h-[90vh] items-center">
-      <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+     <form onSubmit={handleSubmit} action="">
+        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
         <div className="avatar flex justify-center">
           <div className="ring-primary ring-offset-base-100 w-16 rounded-full ring-2 ring-offset-2">
             {
@@ -69,9 +89,13 @@ const Register = () => {
         onChange={handleChange} 
         className="file-input" />
         <button onClick={handleSubmit}  className="btn btn-neutral mt-4">
-          Create Profile
+          {
+            loading ? <span className="loading loading-spinner loading-xs"></span> :   "Create Profile"
+          }
+        
         </button>
       </fieldset>
+     </form>
     </div>
   );
 };
