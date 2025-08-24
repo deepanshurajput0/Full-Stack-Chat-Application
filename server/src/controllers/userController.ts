@@ -34,7 +34,7 @@ export  async function registerController(req:Request,res:Response){
         const token = jwt.sign({id:createdUser.id},process.env.JWT_SECRET as string,{expiresIn:'7d'})
          res.cookie('token',token,{
         httpOnly:true,
-        secure:true,
+        secure:false,
         sameSite:"strict",
         maxAge: 7 * 24 * 60 * 60 * 1000
        })
@@ -67,7 +67,7 @@ export async function loginController(req:Request,res:Response){
       const token = jwt.sign({id:user.id},process.env.JWT_SECRET as string,{expiresIn:'7d'})
        res.cookie('token',token,{
         httpOnly:true,
-        secure:true,
+        secure:false,
         sameSite:"strict",
         maxAge: 7 * 24 * 60 * 60 * 1000
        })

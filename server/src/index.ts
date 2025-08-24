@@ -7,7 +7,10 @@ const app:Application = express()
 const PORT = 8000
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin:'http://localhost:5173',
+    credentials:true
+}))
 app.use(cookie())
 app.get("/",(req:Request,res:Response) =>{
      res.json({msg:"Its working fine"})   
