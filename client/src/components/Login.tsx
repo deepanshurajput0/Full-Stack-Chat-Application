@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-
+import LoginImg from './../Images/vecteezy_ai-generated-illustration-of-mushrooms-growing-abundantly_36526121.png'
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -30,8 +30,13 @@ const Login = () => {
 
 
   return (
-    <div className=" flex justify-evenly h-[90vh] items-center">
-      <form onSubmit={handleSubmit}>
+    <div className=" md:flex md:justify-evenly md:flex-row h-[90vh] md:items-center flex flex-col justify-center items-center">
+      <div>
+        <img className=' md:h-[25rem] h-[15rem]' src={LoginImg} alt='login-img' />
+      </div>
+     <div>
+      <h1 className=' text-3xl font-semibold text-center pb-12' > Login Now </h1>
+       <form onSubmit={handleSubmit}>
                  <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
 
 
@@ -53,6 +58,7 @@ const Login = () => {
   <button type='submit' className="btn btn-neutral mt-4">Login</button>
 </fieldset>
       </form>
+     </div>
 
     </div>
   )
