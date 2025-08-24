@@ -3,8 +3,10 @@ import { Routes, Route } from 'react-router-dom'
 import Login from './components/Login'
 import { Toaster } from 'react-hot-toast';
 import Register from './components/Register'
+import { useAuth } from './hooks/auth';
 function App() {
-  
+  const { user } = useAuth()
+  console.log(user)
   return (
     <div>
        <Routes>
