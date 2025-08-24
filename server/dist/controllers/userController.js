@@ -17,13 +17,15 @@ exports.loginController = loginController;
 exports.currentUser = currentUser;
 exports.getAllUsers = getAllUsers;
 const db_1 = __importDefault(require("../config/db"));
+const cloudinary_1 = __importDefault(require("../config/cloudinary"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 function registerController(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const { name, email, password, profilePic } = req.body;
-            if (!name || !email || !password || !profilePic) {
+            const { name, email, password } = req.body;
+            const file = req.file;
+            if (!name || !email || !password || !file) {
                 return res.status(400).json({ message: 'All Fields are required' });
             }
             const user = yield db_1.default.user.findUnique({
@@ -34,13 +36,16 @@ function registerController(req, res) {
             if (user) {
                 return res.status(400).json({ message: 'User Already exists try new email' });
             }
+            const result = yield cloudinary_1.default.uploader.upload(file.path, {
+                folder: "profile_pics"
+            });
             const hashedPassword = yield bcryptjs_1.default.hash(password, 10);
             const createdUser = yield db_1.default.user.create({
                 data: {
                     name,
                     email,
                     password: hashedPassword,
-                    profilePic
+                    profilePic: result.secure_url
                 }
             });
             const token = jsonwebtoken_1.default.sign({ id: createdUser.id }, process.env.JWT_SECRET, { expiresIn: '7d' });

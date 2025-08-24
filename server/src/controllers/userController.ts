@@ -1,11 +1,13 @@
 import { Request,Response } from 'express'
 import prisma from '../config/db'
+import cloudinary from '../config/cloudinary'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 export  async function registerController(req:Request,res:Response){
       try {
-        const { name, email, password, profilePic } = req.body
-        if(!name || !email || !password || !profilePic){
+        const { name, email, password} = req.body
+        const file = req.file;
+        if(!name || !email || !password || !file){
           return res.status(400).json({message:'All Fields are required'})
         }
         const user = await prisma.user.findUnique({
@@ -16,13 +18,16 @@ export  async function registerController(req:Request,res:Response){
         if(user){
             return res.status(400).json({message:'User Already exists try new email'})
         }
+        const result = await cloudinary.uploader.upload(file.path,{
+          folder:"profile_pics"
+        })
        const hashedPassword = await bcrypt.hash(password,10)
        const createdUser = await prisma.user.create({
             data:{
                 name,
                 email,
                 password:hashedPassword,
-                profilePic
+                profilePic:result.secure_url
             }
         })
 
