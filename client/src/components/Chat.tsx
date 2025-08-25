@@ -33,7 +33,7 @@ const Chat = () => {
     socket.off("receive_message");
     socket.disconnect();
   };
-}, [socket, user?.id]); // depend on user.id
+}, [socket, user?.id,id]); // depend on user.id
 
 
   function sendMessage (e:React.FormEvent){
@@ -44,17 +44,18 @@ const Chat = () => {
    }
   return <div>
 
-    <div>
-        <div className="chat chat-start">
+    <div className=" flex flex-col space-y-5 p-10">
+        
   {
     messages.map((msg,i)=>(
-        <div key={i} className="chat-bubble chat-bubble-primary">{msg.message}</div>
+          <div key={i} className="chat-bubble chat-bubble-primary">{msg.message}</div>
     ))
   }
-</div>
+  
+
     </div>
 <form onSubmit={sendMessage} >
-        <div className=" flex justify-evenly space-x-3 fixed bottom-4">
+        <div className=" flex justify-evenly space-x-3 ">
         <input 
         type="text" 
         className="input" 
@@ -62,7 +63,7 @@ const Chat = () => {
         onChange={(e)=>setMessage(e.target.value)}
         placeholder="type your message..." 
         list="browsers" /> 
-   <button type="submit" className="btn btn-active btn-primary">Send</button>
+   <button  type="submit" className="btn btn-active btn-primary">Send</button>
     </div>
 </form>
   </div>;
