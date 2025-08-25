@@ -1,13 +1,14 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import LoginImg from './../Images/vecteezy_ai-generated-illustration-of-mushrooms-growing-abundantly_36526121.png'
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [user, setUser] = useState({
     email:"",
     password:"",
   })
-  
+  const [loading, setLoading] = useState<boolean>(false)
   function handleChange(e:React.ChangeEvent<HTMLInputElement>){
           const { name, value } = e.target
             setUser({...user,[name]:value})
@@ -15,6 +16,7 @@ const Login = () => {
    
  async function handleSubmit(e:React.FormEvent){
          e.preventDefault()
+         setLoading(true)
         try {
           const res = await axios.post('http://localhost:8000/api/v1/user/login',user,{
             withCredentials:true,
@@ -22,9 +24,14 @@ const Login = () => {
               "Content-Type":"application/json"
             }
           })
-          console.log(res.data)
-        } catch (error) {
-          console.log(error)
+          toast.success(res.data.message)
+        } catch (error:any) {
+           const errorMsg = error.response.data.message
+      if(errorMsg){
+        toast.error(errorMsg)
+      }
+        }finally{
+          setLoading(false)
         }
   }
 
@@ -55,7 +62,13 @@ const Login = () => {
   onChange={handleChange} 
   placeholder="Password" />
    
-  <button type='submit' className="btn btn-neutral mt-4">Login</button>
+  <button type='submit' className="btn btn-neutral mt-4">
+    
+    {
+      loading ? <span className="loading loading-spinner loading-xs"></span> : "Login"
+    }
+
+  </button>
 </fieldset>
       </form>
      </div>
