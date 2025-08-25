@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { useChatUsers } from "../hooks/chatUsers"
 const ChatUsers = () => {
 
@@ -13,6 +14,7 @@ const ChatUsers = () => {
       <div className="overflow-x-auto cursor-pointer">
  {
   users.map((item)=>(
+    <Link key={item.id} to={`/chat/${item.id}`} >
      <table className="table table-zebra">
     {/* head */}
     <thead>
@@ -35,6 +37,7 @@ const ChatUsers = () => {
       </tr>
     </tbody>
   </table>
+    </Link>
   ))
  }
 </div>

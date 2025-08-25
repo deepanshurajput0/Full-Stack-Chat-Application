@@ -7,6 +7,7 @@ import { useAuth } from './hooks/auth';
 import PrivateRoute from './components/PrivateRoute';
 import { Navigate } from "react-router-dom";
 import ChatUsers from './components/ChatUsers';
+import Chat from './components/Chat';
 function App() {
   const { user } = useAuth()
   console.log(user)
@@ -20,6 +21,7 @@ function App() {
          !user ? <Login/> : <Navigate to={'/'} />
         } />
         <Route path='/' element={<ChatUsers/>} />
+        <Route path='/chat/:id' element={<Chat/>} />
         </Routes> 
         <Toaster/>
     </div>

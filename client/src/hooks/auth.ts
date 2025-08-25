@@ -2,7 +2,13 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 
 export const useAuth =()=>{
-    const [user, setUser] = useState(null)
+  interface User {
+    id:number,
+    name:string,
+    email:string,
+    profilePic:string
+  }
+    const [user, setUser] = useState<User | null>(null)
     const [loading, setLoading] = useState(false)
     
     async function getCurrentLoggedInUser(){
