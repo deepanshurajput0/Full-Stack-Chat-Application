@@ -6,6 +6,7 @@ import Register from './components/Register'
 import { useAuth } from './hooks/auth';
 import PrivateRoute from './components/PrivateRoute';
 import { Navigate } from "react-router-dom";
+import ChatUsers from './components/ChatUsers';
 function App() {
   const { user } = useAuth()
   console.log(user)
@@ -18,6 +19,7 @@ function App() {
         <Route path='/login' element={
          !user ? <Login/> : <Navigate to={'/'} />
         } />
+        <Route path='/' element={<ChatUsers/>} />
         </Routes> 
         <Toaster/>
     </div>
