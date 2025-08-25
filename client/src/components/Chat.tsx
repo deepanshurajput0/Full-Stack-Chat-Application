@@ -48,13 +48,14 @@ const Chat = () => {
         
   {
     messages.map((msg,i)=>(
-          <div key={i} className="chat-bubble chat-bubble-primary">{msg.message}</div>
+          <div key={i} className={`chat-bubble ${msg.senderId === user?.id ? `chat-bubble-primary self-end` : `chat-bubble`}  `}>{msg.message}</div>
     ))
   }
   
 
     </div>
-<form onSubmit={sendMessage} >
+<div className=" fixed bottom-4 justify-center ml-8">
+    <form onSubmit={sendMessage} >
         <div className=" flex justify-evenly space-x-3 ">
         <input 
         type="text" 
@@ -66,6 +67,7 @@ const Chat = () => {
    <button  type="submit" className="btn btn-active btn-primary">Send</button>
     </div>
 </form>
+</div>
   </div>;
 };
 
