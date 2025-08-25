@@ -44,7 +44,7 @@ const Chat = () => {
    }
   return <div>
 
-    <div className=" flex flex-col space-y-5 p-10">
+    <div className=" flex flex-col overflow-y-auto space-y-5 p-10">
         
   {
     messages.map((msg,i)=>(
@@ -54,9 +54,10 @@ const Chat = () => {
   
 
     </div>
-<div className=" fixed bottom-4 justify-center ml-8">
+<div className=" justify-center p-5 mb-10 
+ w-full">
     <form onSubmit={sendMessage} >
-        <div className=" flex justify-evenly space-x-3 ">
+        <div className=" flex justify-evenly space-x-3 pt-11 ">
         <input 
         type="text" 
         className="input" 
