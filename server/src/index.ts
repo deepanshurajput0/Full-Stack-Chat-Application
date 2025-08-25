@@ -3,6 +3,7 @@ import { Server } from 'socket.io'
 import cors from 'cors'
 import http from 'http'
 import userRouter from './routes/userRoutes'
+import messageRouter from './routes/messageRoutes'
 import cookie from 'cookie-parser'
 import prisma from './config/db'
 const app:Application = express()
@@ -23,6 +24,7 @@ app.get("/",(req:Request,res:Response) =>{
 
 
 app.use('/api/v1/user',userRouter)
+app.use('/api/v1/message',messageRouter)
 
 const io = new Server(server,{
     cors:{

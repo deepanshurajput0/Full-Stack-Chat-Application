@@ -17,6 +17,7 @@ const socket_io_1 = require("socket.io");
 const cors_1 = __importDefault(require("cors"));
 const http_1 = __importDefault(require("http"));
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
+const messageRoutes_1 = __importDefault(require("./routes/messageRoutes"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const db_1 = __importDefault(require("./config/db"));
 const app = (0, express_1.default)();
@@ -32,6 +33,7 @@ app.get("/", (req, res) => {
     res.json({ msg: "Its working fine" });
 });
 app.use('/api/v1/user', userRoutes_1.default);
+app.use('/api/v1/message', messageRoutes_1.default);
 const io = new socket_io_1.Server(server, {
     cors: {
         origin: 'http://localhost:5173',
