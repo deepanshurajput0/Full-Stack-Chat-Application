@@ -30,5 +30,5 @@ model Message {
   receiverId Int
   sender User @relation("SentMessages",fields: [senderId],references: [id])
   receiver User @relation("ReceivedMessages",fields: [receiverId],references: [id])
-
+   createdAt DateTime @default(now())   
 }
