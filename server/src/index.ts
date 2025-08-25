@@ -58,13 +58,16 @@ io.on('connection', (socket) => {
       });
 
       // Send to receiver if online
-      const receiverSocketId = onlineUsers[to];
+      const receiverSocketId = onlineUsers[to.toString()];
       if (receiverSocketId) {
         io.to(receiverSocketId).emit('receive_message', newMessage);
       }
 
-      // Send back to sender so UI updates
-      socket.emit('receive_message', newMessage);
+      // Send to sender so UI updates instantly
+      const senderSocketId = onlineUsers[from.toString()];
+      if (senderSocketId) {
+        io.to(senderSocketId).emit('receive_message', newMessage);
+      }
 
     } catch (err) {
       console.error("Error saving message:", err);

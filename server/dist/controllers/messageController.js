@@ -16,20 +16,26 @@ exports.getMessages = getMessages;
 const db_1 = __importDefault(require("../config/db"));
 function getMessages(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        var _a, _b;
+        var _a, _b, _c;
         try {
             const { id } = req.params;
+            if (!id && !((_a = req.user) === null || _a === void 0 ? void 0 : _a.id)) {
+                return res.status(400).json({ error: "userId and otherUserId are required" });
+            }
             const messages = yield db_1.default.message.findMany({
                 where: {
                     OR: [
                         {
-                            senderId: (_a = req.user) === null || _a === void 0 ? void 0 : _a.id,
+                            senderId: (_b = req.user) === null || _b === void 0 ? void 0 : _b.id,
                             receiverId: Number(id)
                         }, {
                             senderId: Number(id),
-                            receiverId: (_b = req.user) === null || _b === void 0 ? void 0 : _b.id
+                            receiverId: (_c = req.user) === null || _c === void 0 ? void 0 : _c.id
                         }
                     ]
+                },
+                orderBy: {
+                    createdAt: 'asc'
                 }
             });
             return res.status(200).json(messages);
